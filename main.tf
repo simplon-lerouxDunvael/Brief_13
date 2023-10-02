@@ -15,26 +15,28 @@ provider "azurerm" {
 
 # Utilisation du module
 module "deployment" {
-  source = "git::https://github.com/simplon-lerouxDunvael/Brief_12Bis"
+  source = "git::https://github.com/simplon-lerouxDunvael/Brief_13_bis"
   
-  resource_group_name = "db12-rg"
-  location            = "francecentral"
-  vnet_name           = "db12-vnet"
-  address_space       = ["10.6.0.0/16"]
-  subnet1_name        = "db12-sbnt"
-  subnet1_prefix      = ["10.6.1.0/24"]
-  gateway_name        = "db12_gateway"
-  pubIP_gateway_name  = "db12_gateway_pubIP"
-  pubIP_allocation    = "Static"
-  pubIP_sku           = "Standard"
-  /* routeTab_name       = "db12_routeTab" */
-  priv_subnet_name    = "db12_priv_sbnt"
-  priv_sbnt_add_pref  = ["10.6.2.0/24"]
-  pub_subnet_name     = "db12_pub_sbnt"
-  pub_sbnt_add_pref   = ["10.6.3.0/24"]
-  aks_name            = "db12-AKS"
-  dns_prefix          = "aks-db12"
-  node_pool_name      = "db12pool"
-  node_count          = 2
-  vm_size             = "Standard_D2_v2"
+  resource_group_name   = "db13-rg"
+  location              = "francecentral"
+  vnet_name             = "db13-vnet"
+  address_space         = ["10.6.0.0/16"]
+  subnet1_name          = "db13-sbnt"
+  subnet1_prefix        = ["10.6.1.0/24"]
+  gateway_name          = "db13_gateway"
+  pubIP_gateway_name    = "db13_gateway_pubIP"
+  pubIP_allocation      = "Static"
+  pubIP_sku             = "Standard"
+  priv_subnet_name      = "db13_priv_sbnt"
+  priv_sbnt_add_pref    = ["10.6.2.0/24"]
+  pub_subnet_name       = "db13_pub_sbnt"
+  pub_sbnt_add_pref     = ["10.6.3.0/24"]
+  vm_name               = "db13-VM"
+  vm_size               = "Standard_D2_v2"
+  admin_username        = "DunaAdmin"
+  sshkey_username       = "DunaKeys"
+  storage_account_type  = "Premium_LRS"
+  nic_name              = "b13_Nic"
+  nicIP_conf            = "internal"
+  nic_allocation        = "Dynamic"
 }
