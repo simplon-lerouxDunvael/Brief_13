@@ -123,6 +123,10 @@ terraform plan
 terrafor apply
 ```
 
+Then I had an issue with the storage account type and the vm size with the osDisk that did not work together. I had to change to `DS1_V2` to be able to use `Premium_LRS` storage account.
+
+Then I had an issue with the ssh keys that could not be found. I found the solution on this [publication](https://discuss.hashicorp.com/t/azure-provider-ssh-public-keys-destination-path-restriction/40909/3).
+
 [&#8679;](#top)
 
 <div id='Pipeline'/>  
