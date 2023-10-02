@@ -32,7 +32,7 @@ module "deployment" {
   pub_subnet_name       = "db13_pub_sbnt"
   pub_sbnt_add_pref     = ["10.6.3.0/24"]
   vm_name               = "db13-VM"
-  vm_size               = "Standard_DS2_v2"
+  vm_size               = "Standard_DS1_v2"
   admin_username        = "DunaAdmin"
   sshkey_username       = "DunaKeys"
   storage_account_type  = "Premium_LRS"
