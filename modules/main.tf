@@ -74,7 +74,7 @@ resource "tls_private_key" "sshKey" {
 }
 
 # Créez la machine virtuelle Azure
-resource "azurerm_linux_virtual_machine" "example" {
+resource "azurerm_linux_virtual_machine" "VM" {
   name                = var.vm_name
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
