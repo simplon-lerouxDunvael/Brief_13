@@ -83,7 +83,7 @@ resource "azurerm_linux_virtual_machine" "VM" {
   admin_username      = var.admin_username
   admin_ssh_key {
     username   = "DunaKeys"
-    public_key = tls_private_key.sshKey.public_key_openssh
+    public_key = file("~/.ssh/id_rsa.pub")
   }
   os_disk {
     name              = "osdisk"
