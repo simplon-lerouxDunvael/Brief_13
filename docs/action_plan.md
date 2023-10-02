@@ -114,6 +114,15 @@ R80 Réduire la surface d'attaque des services réseaux
 
 I also found a [redhat GitHub repo](https://github.com/RedHatOfficial/ansible-role-rhel8-anssi_bp28_enhanced/blob/master/tasks/main.yml) with all the rules in code.
 
+Then I added the VM and the variables in my main.tf terraform module (in Brief_13_bis). I modified the variables in the main.tf (in Brief_13).
+I used the following commands to deploy my infra :
+
+```Bash
+terraform init -upgrade
+terraform plan
+terrafor apply
+```
+
 [&#8679;](#top)
 
 <div id='Pipeline'/>  
