@@ -98,6 +98,20 @@ R70 Séparer les comptes systèmes et d'administrateur de l'annuaire
 R79 Durcir et surveiller les services exposés
 R80 Réduire la surface d'attaque des services réseaux
 
+List with minimal rules only :
+
+R30 Désactiver lex comptes utilisateurs inutilisés
+R31 Utiliser des mots de passe robustes
+R53 2viter les fichiers ou répertoires sans utilisateurs ou sans groupe connu
+R54 Activer le sticky bit sur les répertoires inscriptibles
+R56 Eviter l'usage d'exécutables avec les droits spéciaux setuid et setgid
+R58 N'installer que les paquets strictement nécessaires
+R59 Utiliser des dépôts de paquet de confiance
+R61 Effectuer des mises à jour régulières
+R62 Désactiver les services non nécessaires
+R68 Protéger les mots de passe stockés
+R80 Réduire la surface d'attaque des services réseaux
+
 I also found a [redhat GitHub repo](https://github.com/RedHatOfficial/ansible-role-rhel8-anssi_bp28_enhanced/blob/master/tasks/main.yml) with all the rules in code.
 
 [&#8679;](#top)
