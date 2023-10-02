@@ -34,7 +34,6 @@ module "deployment" {
   vm_name               = "db13-VM"
   vm_size               = "Standard_DS1_v2"
   admin_username        = "DunaAdmin"
-  sshkey_username       = "DunaKeys"
   storage_account_type  = "Premium_LRS"
   nic_name              = "b13_Nic"
   nicIP_conf            = "internal"

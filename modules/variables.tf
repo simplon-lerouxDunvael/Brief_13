@@ -108,12 +108,6 @@ variable admin_username {
   default = "DunaAdmin"
 }
 
-variable sshkey_username {
-  description = "Nom de l'utilisateur SSH"
-  type = string
-  default = "DunaKeys"
-}
-
 variable storage_account_type {
   description = "Type de compte de stockage"
   type = string
