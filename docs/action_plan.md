@@ -1,0 +1,300 @@
+<div style='text-align: justify;'>
+
+<div id='top'/>
+
+# Hardening of a Linux machine
+
+## Summary
+
+###### [00 - Daily Scrum](#Scrum)
+
+###### [01 -  Doc reading](#Doc)
+
+###### [02 - Creation of a resource group and deployment of the infrastructure](#RG)
+
+###### [03 - Creating the pipeline](#Pipeline)
+
+###### [04 - Choosing the security tests checking tools](#Choice)
+
+###### [05 - Installation of Trivy](#Trivy)
+
+###### [06 - Installation of OWASP Zap](#Owasp)
+
+###### [07 - Using Trivy and OWASP Zap with Azure DevOps Pipelines](#T&OwtADP)
+
+###### [08 - Prompting administrator to continue or not the pipeline after a failure status from tests](#Admin)
+
+###### [09 - Definition of the different tools](#Definition)
+
+&nbsp;&nbsp;&nbsp;[a) SonarQube](#Sonar)  
+&nbsp;&nbsp;&nbsp;[b) OWASP Dependency-Check](#OWASP1)  
+&nbsp;&nbsp;&nbsp;[c) Clair](#Clair)  
+&nbsp;&nbsp;&nbsp;[d) Trivy](#Trivy)  
+&nbsp;&nbsp;&nbsp;[e) Grype](#Grype)  
+&nbsp;&nbsp;&nbsp;[f) OWASP Zap](#OWASP2)  
+
+###### [10 - Installation of Prometheus and Grafana](#PromGraf)
+
+###### [11 - Creation and configuration of alerts and rotation of dashboards](#Dashboards)
+
+###### [12 - Usefull Commands](#UsefullCommands)
+
+<div id='Scrum'/>  
+
+### **Scrum quotidien**
+
+Scrum Master = Me, myself and I
+Daily personnal reactions with reports and designations of first tasks for the day.
+
+Frequent meeting with other coworkers to study solutions to encountered problems together.
+
+[scrums](https://github.com/simplon-lerouxDunvael/Brief_7/blob/main/Plans_et_demarches/Scrum.md)
+
+[&#8679;](#top)
+
+<div id='Docs'/>  
+
+#### **doc reading**
+
+Researches and reading of documentations to determine the needed prerequisites, functionnalities and softwares to complete the different tasks of Brief 10.
+
+[&#8679;](#top)  
+
+<div id='RG'/>  
+
+### **Creation of a resource group and deployment of the infrastructure**
+
+I created a resource group and deployed the infrastructure with Terraform.
+
+
+
+[&#8679;](#top)
+
+<div id='Pipeline'/>  
+
+### ****
+
+
+[&#8679;](#top)
+
+<div id='Choice'/>  
+
+### ****
+
+
+
+[&#8679;](#top)
+
+<div id='Trivy'/>  
+
+### ****
+
+
+[&#8679;](#top)
+
+<div id='Owasp'/>  
+
+### ****
+
+
+
+[&#8679;](#top)
+
+<div id='T&OwtADP'/>  
+
+### ****
+
+
+
+[&#8679;](#top)
+
+<div id='Admin'/>  
+
+### ****
+
+
+[&#8679;](#top)
+
+<div id='PromGraf'/>  
+
+### **Installation of SCAP**
+
+
+
+[&#8679;](#top)
+
+<div id='Dashboards'/>  
+
+### ****
+
+
+[&#8679;](#top)
+
+
+<div id='UsefullCommands'/>  
+
+### **USEFULL COMMANDS**
+
+### **To clone and pull a GitHub repository**
+
+```bash
+git clone [GitHubRepositoryURL]
+```
+
+```bash
+git pull
+```
+
+[&#8679;](#top)
+
+### **To create an alias for a command on azure CLi**
+
+alias [WhatWeWant]="[WhatIsChanged]"  
+
+*Example :*  
+
+```bash
+alias k="kubectl"
+```
+
+[&#8679;](#top)
+
+### **To deploy resources with yaml file with Terrafom**
+
+terraform init
+terraform plan
+tarreform apply
+
+[&#8679;](#top)
+
+### **To check resources**
+
+```bash
+kubectl get nodes
+kubectl get pods
+kubectl get services
+kubectl get deployments
+kubectl get events
+kubectl get secrets
+kubectl get logs
+helm list --all-namespaces
+k get ingressclass --all-namespaces
+```
+
+*To keep verifying the resources add --watch at the end of the command :*
+
+*Example :*
+
+```bash
+kubectl get services --watch
+```
+
+*To check the resources according to their namespace, add --namespace after the command and the namespace's name :*
+
+*Example :*
+
+```bash
+kubectl get services --namespace [namespace's-name]
+```
+
+[&#8679;](#top)
+
+### **To describe resources**
+
+```bash
+kubectl describe nodes
+kubectl describe pods
+kubectl describe services # or svc
+kubectl describe deployment # or deploy
+kubectl describe events
+kubectl describe secrets
+kubectl describe logs
+```
+
+*To specify which resource needs to be described just put the resource ID at the end of the command.*
+
+*Example :*
+
+```bash
+kubectl describe svc redis-service
+```
+
+*To access to all the logs from all containers :*
+
+```bash
+kubectl logs podname --all-containers
+```
+
+*To access to the logs from a specific container :*
+
+```bash
+kubectl logs podname -c [container's-name]
+```
+
+*To list all events from a specific pod :*
+
+```bash
+kubectl get events --field-selector [involvedObject].name=[podsname]
+```
+
+[&#8679;](#top)
+
+### **To delete resources**
+
+```bash
+kubectl delete deploy --all
+kubectl delete svc --all
+kubectl delete pvc --all
+kubectl delete pv --all
+kubectl delete ingress --all
+kubectl delete secrets --all
+kubectl delete certificates --all
+az group delete --name [resourceGroupName] --yes --no-wait
+
+kubectl delete deployments --all -n [namespaceName]
+kubectl delete pods --all -n [namespaceName]
+kubectl delete replicaset --all -n [namespaceName]
+kubectl delete statefulset --all -n [namespaceName]
+kubectl delete daemonset --all -n [namespaceName]
+kubectl delete svc --all -n [namespaceName]
+kubectl delete namespace [namespaceName]
+kubectl delete clusterrole prometheus-grafana-clusterrole
+kubectl delete clusterrole prometheus-kube-state-metrics
+kubectl delete clusterrole system:prometheus
+kubectl delete clusterrolebinding --all -n [namespaceName]
+k delete ingressclass [insert ingressclass] --all-namespaces
+```
+
+[&#8679;](#top)
+
+### **To check TLS certificate in request order**
+
+```bash
+kubectl get certificate
+kubectl get certificaterequest
+kubectl get order
+kubectl get challenge
+```
+
+[&#8679;](#top)
+
+### **To describe TLS certificate in request order**
+
+```bash
+kubectl describe certificate
+kubectl describe certificaterequest
+kubectl describe order
+kubectl describe challenge
+```
+
+[&#8679;](#top)
+
+### **Get the IP address to point the DNS to nginx in the two namespaces**
+
+```bash
+kubectl get svc --all-namespaces
+```
+
+[&#8679;](#top)
+
+</div>
