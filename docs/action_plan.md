@@ -138,9 +138,9 @@ Then I had an issue with the ssh keys that could not be found. I found the solut
 
 <div id='Choice'/>  
 
-### ****
+### **Install SCAP**
 
-
+I searched for docs and found this [guide](https://www.open-scap.org/getting-started/).
 
 [&#8679;](#top)
 
