@@ -1,1 +1,15 @@
-playbook
+---
+- name: Run SCAP audit
+  hosts: your_target_hosts
+  become: yes
+  tasks:
+    - name: Run SCAP audit
+      command: "oscap xccdf eval --profile ANSSI-REDHAT8-DT/PROFILE1 system"
+      register: audit_result
+      ignore_errors: yes
+
+    - name: Save audit report
+      copy:
+        content: "{{ audit_result.stdout }}"
+        dest: /path/to/save/audit_report.xml
+      when: audit_result.rc == 0

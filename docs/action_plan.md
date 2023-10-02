@@ -142,6 +142,49 @@ Then I had an issue with the ssh keys that could not be found. I found the solut
 
 I searched for docs and found this [guide](https://www.open-scap.org/getting-started/).
 
+Install and configure SCAP :
+
+SCAP Security Guide et l'outil OpenSCAP installation :
+
+```Bash
+sudo yum install scap-security-guide openscap-scanner
+```
+
+ANSSI profile :
+
+`Title: ANSSI-BP-028 (minimal)`
+`                Id: xccdf_org.ssgproject.content_profile_anssi_bp28_minimal`
+
+To audit my VM :
+
+```Bash
+sudo oscap xccdf eval --profile [ANSSI-PROFILE1] system
+```
+
+This command analyzes the system against the ANSSI security profile and generates an audit report in XML format.
+
+To check the results the generated audit report should be examined to identify any deviations or violations of security recommendations.
+
+If deviations are identified, action must be taken to correct them in line with ANSSI recommendations. This may involve configuration changes, patching, etc.
+
+Once the necessary changes have been made, the audit should be re-run using the same oscap command to confirm that the hardening measures are now in place :
+
+```Bash
+sudo oscap xccdf eval --profile [ANSSI-PROFILE1] system
+```
+
+After installing SCAP on my VM, I created a playbook.yml file. In this playbook, I specify the steps required to run the SCAP audit and save the audit report. I customize `target_hosts` with the host group I want to audit, and adjust the destination path to save the audit report.
+
+Once I've created this playbook, I run it from the command line with the following Ansible command:
+
+```bash
+ansible-playbook playbook.yml
+```
+
+This runs the audit according to my schedule or when triggered manually, saves the audit report and allows me to monitor the results.
+
+
+
 [&#8679;](#top)
 
 <div id='Trivy'/>  
