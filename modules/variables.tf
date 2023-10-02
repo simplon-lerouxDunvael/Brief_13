@@ -5,7 +5,7 @@
 variable resource_group_name {
   description = "Nom du RG"
   type = string
-  default = "db12-rg"
+  default = "db13-rg"
 }
 
 variable location {
@@ -19,7 +19,7 @@ variable location {
 variable vnet_name {
   description = "Nom du Vnet"
   type = string
-  default = "db12-vnet"
+  default = "db13-vnet"
 }
 
 variable address_space {
@@ -31,7 +31,7 @@ variable address_space {
 variable subnet1_name {
   description = "Nom du sous-réseau 1"
   type = string
-  default = "db12-sbnt"
+  default = "db13-sbnt"
 }
 
 variable subnet1_prefix {  
@@ -43,13 +43,13 @@ variable subnet1_prefix {
 variable gateway_name {  
   description = "Nom de la passerelle"
   type = string
-  default = "db12_gateway"
+  default = "db13_gateway"
 }
 
 variable pubIP_gateway_name {  
   description = "Nom de l'IP publique de la gateway"
   type = string
-  default = "db12_gateway_pubIP"
+  default = "db13_gateway_pubIP"
 }
 
 variable pubIP_allocation {  
@@ -64,16 +64,10 @@ variable pubIP_sku {
   default = "Standard"
 }
 
-/* variable routeTab_name {  
-  description = "Nom de la table de routage"
-  type = string
-  default = "db12_routeTab"
-} */
-
 variable priv_subnet_name {  
   description = "Nom du sous-réseau privé"
   type = string
-  default = "db12_priv_sbnt"
+  default = "db13_priv_sbnt"
 }
 
 variable priv_sbnt_add_pref {  
@@ -85,7 +79,7 @@ variable priv_sbnt_add_pref {
 variable pub_subnet_name {  
   description = "Nom du sous-réseau publique"
   type = string
-  default = "db12_pub_sbnt"
+  default = "db13_pub_sbnt"
 }
 
 variable pub_sbnt_add_pref {  
@@ -94,30 +88,12 @@ variable pub_sbnt_add_pref {
   default = ["10.6.3.0/24"]
 }
 
-# Variables pour l'AKS
+# Variables pour la VM
 
-variable aks_name {
+variable vm_name {
   description = "Nom du cluster AKS"
   type = string
-  default = "db12-AKS"
-}
-
-variable dns_prefix {
-  description = "DNS pour le cluster AKS"
-  type = string
-  default = "aks-db12"
-}
-
-variable node_pool_name {
-  description = "Nom du node pool"
-  type = string
-  default = "db12pool"
-}
-
-variable node_count {
-  description = "Nombre de nodes"
-  type = number
-  default = 2
+  default = "db13-VM"
 }
 
 variable vm_size {
@@ -126,32 +102,38 @@ variable vm_size {
   default = "Standard_D2_v2"
 }
 
-/* variable LB {
-  description = "Sku du load balancer"
+variable admin_username {
+  description = "Nom de l'administrateur de la VM"
   type = string
-  default = "standard"
+  default = "DunaAdmin"
 }
 
-variable "service_cidr" {
-  description = "(Optional) The Network Range used by the Kubernetes service.Changing this forces a new resource to be created."
-  type        = string
-  default     = "10.0.0.0/16"
+variable sshkey_username {
+  description = "Nom de l'utilisateur SSH"
+  type = string
+  default = "DunaKeys"
 }
 
-variable "dns_service_ip" {
-  description = "(Optional) IP address within the Kubernetes service address range that will be used by cluster service discovery (kube-dns)."
-  type        = string
-  default     = "10.0.0.10"
+variable storage_account_type {
+  description = "Type de compte de stockage"
+  type = string
+  default = "Premium_LRS"
 }
 
-variable "pod_cidr" {
-  description = "(Optional) The CIDR to use for pod IP addresses. Changing this forces a new resource to be created."
-  type        = string
-  default     = "10.244.0.0/16"
+variable nic_name {
+  description = "Nom du NIC"
+  type = string
+  default = "b13_Nic"
 }
 
-variable "docker_bridge_cidr" {
-  description = "(Optional) The Network Range used by the Kubernetes service. Changing this forces a new resource to be created."
-  type        = string
-  default     = "172.17.0.1/16"
-} */
+variable nicIP_conf {
+  description = "Nom de la configuration NIC"
+  type = string
+  default = "internal"
+}
+
+variable nic_allocation {
+  description = "Type d'allocation de l'adresse IP privée"
+  type = string
+  default = "Dynamic"
+}
