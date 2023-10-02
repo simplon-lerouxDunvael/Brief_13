@@ -1,0 +1,1 @@
+Folder to store the scan reports of SCAP tool.
