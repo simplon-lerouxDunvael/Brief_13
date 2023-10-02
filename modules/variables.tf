@@ -117,7 +117,7 @@ variable sshkey_username {
 variable storage_account_type {
   description = "Type de compte de stockage"
   type = string
-  default = "Standard_LRS"
+  default = "Premium_LRS"
 }
 
 variable nic_name {

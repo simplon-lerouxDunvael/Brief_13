@@ -35,7 +35,7 @@ module "deployment" {
   vm_size               = "Standard_D2_v2"
   admin_username        = "DunaAdmin"
   sshkey_username       = "DunaKeys"
-  storage_account_type  = "Standard_LRS"
+  storage_account_type  = "Premium_LRS"
   nic_name              = "b13_Nic"
   nicIP_conf            = "internal"
   nic_allocation        = "Dynamic"
