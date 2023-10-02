@@ -18,43 +18,6 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
-# Déploiement du cluster AKS
-resource "azurerm_kubernetes_cluster" "AKS" {
-  name                = var.aks_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = var.dns_prefix
-  
-  default_node_pool {
-    name               = var.node_pool_name
-    node_count         = var.node_count
-    vm_size            = var.vm_size
-    vnet_subnet_id     = azurerm_subnet.subnet1.id 
-  }
-
-  /* network_profile {
-    network_plugin     = "kubenet"
-    load_balancer_sku  = var.LB
-    service_cidr       = var.service_cidr
-    dns_service_ip     = var.dns_service_ip
-    pod_cidr           = var.pod_cidr
-    docker_bridge_cidr = var.docker_bridge_cidr
-  } */
-
-  identity {
-    type = "SystemAssigned" # UserAssigned
-  }
-
-  /* depends_on = [
-    azurerm_route.routeTab,
-    azurerm_role_assignment.route-association
-  ] */
-
-  tags = {
-    Environment = "dev"
-  }
-}
-
 resource "azurerm_virtual_network" "vnet" {
   name                = var.vnet_name
   resource_group_name = azurerm_resource_group.rg.name
@@ -87,19 +50,6 @@ resource "azurerm_public_ip" "pubIP_gateway" {
   sku                 = var.pubIP_sku
 }
 
-/* # Créer une Route Table
-resource "azurerm_route_table" "routeTab" {
-  name                = var.routeTab_name
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-}
-
-# Attacher la Route Table au Subnet
-resource "azurerm_subnet_route_table_association" "route-association" {
-  subnet_id      = azurerm_subnet.subnet1.id
-  route_table_id = azurerm_route_table.routeTab.id
-} */
-
 # Créer un sous-réseau privé
 resource "azurerm_subnet" "priv_subnet" {
   name                 = var.priv_subnet_name
@@ -114,4 +64,52 @@ resource "azurerm_subnet" "pub_subnet" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = var.pub_sbnt_add_pref
+}
+
+
+# Créez une clé SSH pour la machine virtuelle
+resource "tls_private_key" "sshKey" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+# Créez la machine virtuelle Azure
+resource "azurerm_linux_virtual_machine" "example" {
+  name                = var.vm_name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  network_interface_ids = [azurerm_network_interface.Nic.id]
+  size                = var.vm_size
+  admin_username      = var.admin_username
+  admin_ssh_key {
+    username   = "DunaKeys"
+    public_key = tls_private_key.sshKey.public_key_openssh
+  }
+  os_disk {
+    name              = "osdisk"
+    caching           = "ReadWrite"
+    storage_account_type = var.storage_account_type
+  }
+  source_image_reference {
+    publisher = "RedHat"
+    offer     = "RHEL"
+    sku       = "8-LVM"
+    version   = "8.8.2023081717"
+  }
+  /* provisioner "local-exec" {
+  command = "ansible-galaxy install -r requirements.txt"
+} */
+}
+
+# Créez une interface réseau pour la machine virtuelle
+resource "azurerm_network_interface" "Nic" {
+  name                = var.nic_name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                          = var.nicIP_conf
+    subnet_id                     = azurerm_subnet.subnet1.id
+    private_ip_address_allocation = var.nic_allocation
+  }
 }
