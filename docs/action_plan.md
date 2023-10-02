@@ -66,7 +66,39 @@ Researches and reading of documentations to determine the needed prerequisites, 
 
 I created a resource group and deployed the infrastructure with Terraform.
 
+Then I checked the list of rules to apply with ansible role :
 
+R28 Partitionnement type
+R30 Désactiver lex comptes utilisateurs inutilisés
+R31 Utiliser des mots de passe robustes
+R32 Expirer les sessions utilisateur locales
+R33 Assurer l'imputabilité des actions d'amdministration
+R34 Désactiver les comptes de service
+R35 Utiliser des comptes de service uniques et exclusifs
+R39 Modifier les directives de configuration sudo
+R40 Utiliser des utilisateurs cibles non-privilégiés pour les commandes sudo
+R42 Bannir les négations dans les spécifications sudo
+R43 Préciser les arguments dans les spécifications sudo
+R44 Editer les fichiers de manière sécurisée avec sudo
+R50 Restreindre les droits d'accès aux fichiers et aux répertoires sensibles
+R52 Restreindre les droits d'accès aux sockets et aux pipes nommées
+R53 2viter les fichiers ou répertoires sans utilisateurs ou sans groupe connu
+R54 Activer le sticky bit sur les répertoires inscriptibles
+R55 Séparer les répertoires temporaires des utilisateurs
+R53 Eviter l'usage d'exécutables avec les droits spéciaux setuid et setgid
+R58 N'installer que les paquets strictement nécessaires
+R59 Utiliser des dépôts de paquet de confiance
+R61 Effectuer des mises à jour régulières
+R62 Désactiver les services non nécessaires
+R63 Désactiver les fonctionnalités des services non essentielles
+R67 Sécuriser les authentifications distantes par PAM
+R68 Protéger les mots de passe stockés
+R69 Sécuriser les accès aux bases utlisateurs distantes
+R70 Séparer les comptes systèmes et d'administrateur de l'annuaire
+R79 Durcir et surveiller les services exposés
+R80 Réduire la surface d'attaque des services réseaux
+
+I also found a [redhat GitHub repo](https://github.com/RedHatOfficial/ansible-role-rhel8-anssi_bp28_enhanced/blob/master/tasks/main.yml) with all the rules in code.
 
 [&#8679;](#top)
 
