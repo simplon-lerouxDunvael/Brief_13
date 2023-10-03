@@ -2,7 +2,7 @@
 - name: Run roles and SCAP audit
   hosts: db13-VM
   remote_user: DunaAdmin
-  become: true
+  become: yes # true
   roles:
     - "sudo"
     - ...
