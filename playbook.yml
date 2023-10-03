@@ -1,9 +1,16 @@
 ---
-- name: Run SCAP audit
+- name: Run roles and SCAP audit
   hosts: db13-VM
   remote_user: DunaAdmin
   become: true
+  roles:
+    - "sudo"
+    - ...
   tasks:
+    - name: Install SCAP
+      command: "sudo yum install scap-security-guide openscap-scanner"
+      ignore_errors: yes
+
     - name: Run SCAP audit
       command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_anssi_bp28_minimal system"
       register: audit_result
