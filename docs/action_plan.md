@@ -293,8 +293,9 @@ This runs the audit according to my schedule or when triggered manually, saves t
 
 <div id='Trivy'/>  
 
-### ****
+### **Roles**
 
+In order to create the ansible roles I used this [github repository](https://github.com/GSA/ansible-os-rhel8/tree/main) and this [ansible galaxy role](https://galaxy.ansible.com/ui/standalone/roles/RedHatOfficial/rhel8_anssi_bp28_minimal/).
 
 [&#8679;](#top)
 
