@@ -1,15 +1,15 @@
 ---
 - name: Run SCAP audit
-  hosts: your_target_hosts
+  hosts: db13-VM
   become: yes
   tasks:
     - name: Run SCAP audit
-      command: "oscap xccdf eval --profile ANSSI-REDHAT8-DT/PROFILE1 system"
+      command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_anssi_bp28_minimal system"
       register: audit_result
       ignore_errors: yes
 
     - name: Save audit report
       copy:
         content: "{{ audit_result.stdout }}"
-        dest: /path/to/save/audit_report.xml
+        dest: ../audit_reports/audit_report.xml
       when: audit_result.rc == 0
