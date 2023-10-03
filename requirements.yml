@@ -1,0 +1,4 @@
+- src: git@github
+  name: 
+  version: 
+  scm: git

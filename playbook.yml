@@ -1,7 +1,8 @@
 ---
 - name: Run SCAP audit
   hosts: db13-VM
-  become: yes
+  remote_user: DunaAdmin
+  become: true
   tasks:
     - name: Run SCAP audit
       command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_anssi_bp28_minimal system"
