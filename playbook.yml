@@ -3,9 +3,9 @@
   hosts: db13-VM
   remote_user: DunaAdmin
   become: yes # true
-  roles:
-    - "sudo"
-    - ...
+  # roles:
+  #   - "sudo"
+  #   - ...
   tasks:
     - name: Install SCAP
       command: "sudo yum install scap-security-guide openscap-scanner"
