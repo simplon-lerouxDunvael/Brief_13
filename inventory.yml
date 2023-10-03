@@ -1,0 +1,10 @@
+# Dynamic inventory
+
+plugin: azure_rm
+auth_source: auth_source
+
+include_vm_resource_groups:
+  - 'db13-rg'
+
+conditionnal_groups:
+  generatedVm: "'db13-VM' in computer_name"
