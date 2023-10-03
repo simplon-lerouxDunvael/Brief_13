@@ -133,6 +133,8 @@ Then I had an issue with the ssh keys that could not be found. I found the solut
 
 ### **Inventory.ini and playbook.yml**
 
+#### Inventory
+
 The Ansible inventory.ini file is a file that lists the hosts on which to run Ansible tasks or playbooks. It is used to define the targets on which Ansible will act.
 
 It identifies target machines, their IP addresses or hostnames, and the groups to which they belong. It organizes the hosts into logical groups to simplify management by organizing hosts according to role (e.g. web servers, databases) or location (e.g. data center A, data center B), and run specific playbooks on groups of hosts.
@@ -169,6 +171,32 @@ db13-VM ansible_host=db13-VM
 ```
 
 This configuration specifies that "db13-VM" is the host name, and that i want Ansible to use it as the identifier for my Azure VM.
+
+It is also possible to use an inventory.yml file. It makes possible to create a dynamic inventory :
+
+```Bash
+# Dynamic inventory
+
+plugin: azure_rm
+# Use the default authentication method
+auth_source: auto
+
+include_vm_resource_groups:
+# Include the resource group containing the VM
+  - 'db13-rg'
+
+conditionnal_groups:
+# Conditionally group VMs based on computer name
+  generatedVm: "'db13-VM' in computer_name"
+```
+
+*auth_source* : The auth_source variable specifies the source of the Azure credentials. It is important to ensure that the authentication source is correctly configured in the Ansible configuration or environment variables. Typically, it should be set to "auto" to use the default authentication methods.
+
+*include_vm_resource_groups* : This section specifies which Azure resource groups to include in the inventory. It makes possible to target a specific resource group and its resources. Be careful with permissions to access these resources.
+
+*conditionnal_groups* : The conditionnal_groups section checks if the VM's computer_name includes the string 'db13-VM'. This should work if the VM's computer name is indeed 'db13-VM'.
+
+#### Playbook
 
 The playbook.yml file will contain tasks and instructions for performing the audit using the oscap tool, as well as for saving the audit report. It will also run the ansible roles that are in my Github repository.
 
