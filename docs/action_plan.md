@@ -131,8 +131,73 @@ Then I had an issue with the ssh keys that could not be found. I found the solut
 
 <div id='Pipeline'/>  
 
-### ****
+### **Inventory.ini and playbook.yml**
 
+The Ansible inventory.ini file is a file that lists the hosts on which to run Ansible tasks or playbooks. It is used to define the targets on which Ansible will act.
+
+It identifies target machines, their IP addresses or hostnames, and the groups to which they belong. It organizes the hosts into logical groups to simplify management by organizing hosts according to role (e.g. web servers, databases) or location (e.g. data center A, data center B), and run specific playbooks on groups of hosts.
+
+To reference an Azure virtual machine in an Ansible inventory file (inventory.ini), it is possible to use either the virtual machine's public IP address or its host name.
+
+To create an inventory.ini file with IP address :
+
+```Bash
+[azure_vms]
+azure_vm ansible_host=<adresse_IP_publique>
+```
+
+* [azure_vms] is the name of the inventory group to reference in the Ansible playbooks
+* azure_vm is the name assigned to the virtual machine
+* <public_IP_address> must be replaced by the public IP address of the Azure virtual machine
+
+To create an inventory.ini file with the host name :
+
+* [azure_vms] is the name of the inventory group to reference in the Ansible playbooks
+* azure_vm is the name assigned to the virtual machine
+* <host_name> must be replaced by the host name of the Azure virtual machine
+
+```Bash
+[azure_vms]
+azure_vm ansible_host=<nom_d_hote>
+```
+
+I chose to use the host name as the VM is deployed at the same time as the ansible role.
+
+```Bash
+[azure_vms]
+db13-VM ansible_host=db13-VM
+```
+
+This configuration specifies that "db13-VM" is the host name, and that i want Ansible to use it as the identifier for my Azure VM.
+
+
+The playbook.yml file will contain tasks and instructions for performing the audit using the oscap tool, as well as for saving the audit report.
+
+```Bash
+---
+- name: Run SCAP audit
+  hosts: db13-VM
+  become: yes
+  tasks:
+    - name: Run SCAP audit
+      command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_anssi_bp28_minimal system"
+      register: audit_result
+      ignore_errors: yes
+
+    - name: Save audit report
+      copy:
+        content: "{{ audit_result.stdout }}"
+        dest: ../audit_reports/audit_report.xml
+      when: audit_result.rc == 0
+```
+
+I modified the playbook so it uses the db13-VM as the target host to run the SCAP audit with the specified profile.
+
+When I run my playbook, it targets the VM named "db13-VM" using the host name I specified in the inventory file and executes the SCAP audit with the specified profile. The audit report are saved in the audit_reports directory of my GitHub repository.
+
+To run the playbook I need to :
+
+ansible-playbook playbook.yml
 
 [&#8679;](#top)
 
@@ -155,7 +220,7 @@ ANSSI profile :
 `Title: ANSSI-BP-028 (minimal)`
 `                Id: xccdf_org.ssgproject.content_profile_anssi_bp28_minimal`
 
-To audit my VM :
+To audit my VM : *the ANSSI-PROFILE1 has to be replaced with the id of the profile.*
 
 ```Bash
 sudo oscap xccdf eval --profile [ANSSI-PROFILE1] system
