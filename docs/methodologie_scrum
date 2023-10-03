@@ -5,22 +5,22 @@
 **Lundi 02/10/23**  
 *Résultats de la veille* :  
 
-* Commencer le brief
-* Déployer l'infrastructure
-
 *Objectifs* =  
 
-* 
+* Commencer le brief
+* Déployer l'infrastructure
 
 **Mardi 03/10/23**  
 *Résultats de la veille* :  
 
 * Brief commencé
 * Repo Github créé
+* Infra déployée (avec VM)
 
 *Objectifs* =  
 
-* 
+* Continuer le brief
+* Tester le playbook Ansible
 
 **Mercredi 04/10/23**  
 *Résultats de la veille* :  
