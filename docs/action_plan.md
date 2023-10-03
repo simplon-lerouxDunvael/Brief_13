@@ -170,15 +170,22 @@ db13-VM ansible_host=db13-VM
 
 This configuration specifies that "db13-VM" is the host name, and that i want Ansible to use it as the identifier for my Azure VM.
 
-
-The playbook.yml file will contain tasks and instructions for performing the audit using the oscap tool, as well as for saving the audit report.
+The playbook.yml file will contain tasks and instructions for performing the audit using the oscap tool, as well as for saving the audit report. It will also run the ansible roles that are in my Github repository.
 
 ```Bash
 ---
-- name: Run SCAP audit
+- name: Run roles and SCAP audit
   hosts: db13-VM
-  become: yes
+  remote_user: DunaAdmin
+  become: true
+  roles:
+    - "sudo"
+    - ...
   tasks:
+    - name: Install SCAP
+      command: "sudo yum install scap-security-guide openscap-scanner"
+      ignore_errors: yes
+
     - name: Run SCAP audit
       command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_anssi_bp28_minimal system"
       register: audit_result
@@ -195,15 +202,19 @@ I modified the playbook so it uses the db13-VM as the target host to run the SCA
 
 When I run my playbook, it targets the VM named "db13-VM" using the host name I specified in the inventory file and executes the SCAP audit with the specified profile. The audit report are saved in the audit_reports directory of my GitHub repository.
 
-To run the playbook I need to :
+To run the playbook I need to use this command :
 
-ansible-playbook playbook.yml
+```Bash
+ansible-playbook playbook.yml -i inventory.ini
+```
 
 [&#8679;](#top)
 
 <div id='Choice'/>  
 
 ### **Install SCAP**
+
+*I used the playbook to install SCAP and run a scan. CF. Previous chapter.*
 
 I searched for docs and found this [guide](https://www.open-scap.org/getting-started/).
 
@@ -243,7 +254,7 @@ After installing SCAP on my VM, I created a playbook.yml file. In this playbook,
 Once I've created this playbook, I run it from the command line with the following Ansible command:
 
 ```bash
-ansible-playbook playbook.yml
+ansible-playbook playbook.yml -i inventory.ini
 ```
 
 This runs the audit according to my schedule or when triggered manually, saves the audit report and allows me to monitor the results.
