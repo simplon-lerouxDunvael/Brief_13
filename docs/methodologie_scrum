@@ -25,11 +25,15 @@
 **Mercredi 04/10/23**  
 *Résultats de la veille* :  
 
-* 
+* Brief continué
+* Playbook mis à jour
+* Inventory.ini et .yml mis à jour
+* Provisioners ajoutés et configurés
 
 *Objectifs* =  
 
-* 
+* Lancer le playbook pour voir si ça marche 
+* Si ça marche et que le scan SCAP est effectué, analyser le rapport et récupérer les tasks ansible
 
 **Jeudi 05/10/23**  
 *Résultats de la veille* :  
