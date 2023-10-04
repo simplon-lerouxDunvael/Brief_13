@@ -160,14 +160,14 @@ To create an inventory.ini file with the host name :
 
 ```Bash
 [azure_vms]
-azure_vm ansible_host=<nom_d_hote>
+azure_vm ansible_ssh_host=<nom_d_hote>
 ```
 
 I chose to use the host name as the VM is deployed at the same time as the ansible role.
 
 ```Bash
 [azure_vms]
-db13-VM ansible_host=db13-VM
+db13-VM ansible_ssh_host=db13-VM
 ```
 
 This configuration specifies that "db13-VM" is the host name, and that i want Ansible to use it as the identifier for my Azure VM.
@@ -195,6 +195,8 @@ conditionnal_groups:
 *include_vm_resource_groups* : This section specifies which Azure resource groups to include in the inventory. It makes possible to target a specific resource group and its resources. Be careful with permissions to access these resources.
 
 *conditionnal_groups* : The conditionnal_groups section checks if the VM's computer_name includes the string 'db13-VM'. This should work if the VM's computer name is indeed 'db13-VM'.
+
+I checked this [azure doc](https://learn.microsoft.com/en-us/azure/developer/ansible/dynamic-inventory-configure?tabs=azure-cli) to create a dynamic inventory.
 
 #### Playbook
 
