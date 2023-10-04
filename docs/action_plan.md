@@ -127,6 +127,8 @@ Then I had an issue with the storage account type and the vm size with the osDis
 
 Then I had an issue with the ssh keys that could not be found. I found the solution on this [publication](https://discuss.hashicorp.com/t/azure-provider-ssh-public-keys-destination-path-restriction/40909/3).
 
+To bound the NSG and the NIC I followed this [guide](https://www.patrickkoch.dev/posts/post_25/) and created an association resource to bound the NSG and NIC.
+
 [&#8679;](#top)
 
 <div id='Pipeline'/>  
@@ -145,7 +147,7 @@ To create an inventory.ini file with IP address :
 
 ```Bash
 [azure_vms]
-azure_vm ansible_host=<adresse_IP_publique>
+azure_vm ansible_ssh_host=<adresse_IP_publique>
 ```
 
 * [azure_vms] is the name of the inventory group to reference in the Ansible playbooks
