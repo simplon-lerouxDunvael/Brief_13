@@ -1,4 +1,0 @@
-- src: git@github
-  name: sudo # name of the role to deploy
-  version: main
-  scm: git
