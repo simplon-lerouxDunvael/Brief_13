@@ -31,6 +31,9 @@ module "deployment" {
   priv_sbnt_add_pref    = ["10.6.2.0/24"]
   pub_subnet_name       = "dunab13_pub_sbnt"
   pub_sbnt_add_pref     = ["10.6.3.0/24"]
+  nic_publicIP_name     = "dunab13_nic_pubIP"
+  nic_pubIP_allocation  = "Static"
+  sku_nic_pubIP         = "Standard"
   vm_name               = "dunab13-VM"
   vm_size               = "Standard_DS1_v2"
   admin_username        = "DunaAdmin"
