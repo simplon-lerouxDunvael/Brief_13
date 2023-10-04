@@ -18,7 +18,7 @@ module "deployment" {
   source = "git::https://github.com/simplon-lerouxDunvael/Brief_13_bis"
   
   resource_group_name   = "db13-rg"
-  location              = "francecentral"
+  location              = "West Europe"
   vnet_name             = "db13-vnet"
   address_space         = ["10.6.0.0/16"]
   subnet1_name          = "db13-sbnt"
