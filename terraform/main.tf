@@ -43,7 +43,7 @@ module "deployment" {
   nsgRule_destination_address_prefix  = "*"
   nsg-rule_name2                      = "nsgRule_allow-outbound"
   nsgRule_priority2                   = 2001
-  nsgRule_direction2                  = "Outound"
+  nsgRule_direction2                  = "Outbound"
   nsgRule_access2                     = "Allow"
   nsgRule_protocol2                   = "Tcp"
   nsgRule_source_port_range2          = "*"
