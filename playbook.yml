@@ -32,9 +32,3 @@
         flat: yes
       tags:
       - verification
-
-    # - name: Save audit report
-    #   copy:
-    #     content: "{{ oscap_result.stdout }}"
-    #     dest: ../audit_reports/audit_report.xml
-    #   when: oscap_result.rc == 0
