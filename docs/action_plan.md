@@ -131,6 +131,21 @@ To bound the NSG and the NIC I followed this [guide](https://www.patrickkoch.dev
 
 I also added the ansible provider (cf. doc [ansible provider](https://registry.terraform.io/providers/ansible/ansible/latest/docs)).
 
+I use a terraform module and also deploy resources directly in my main.tf. I reference resources from the module with `module.NameOfModule.OutputName.valueIwant`.
+
+Example : 
+
+```Bash
+# Créer une adresse IP publique pour le NIC de la VM
+resource "azurerm_public_ip" "nic_public_ip" {
+  name                = var.nic_publicIP_name
+  resource_group_name = module.deployment.resource_group.name
+  location            = module.deployment.resource_group.location
+  allocation_method   = var.nic_pubIP_allocation # Use "Static" if a static IP is needed
+  sku                 = var.sku_nic_pubIP
+}
+```
+
 [&#8679;](#top)
 
 <div id='Pipeline'/>  
