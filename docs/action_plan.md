@@ -447,152 +447,30 @@ git pull
 
 [&#8679;](#top)
 
-### **To create an alias for a command on azure CLi**
+### **To deploy and manage resources with yaml file with Terrafom**
 
-alias [WhatWeWant]="[WhatIsChanged]"  
-
-*Example :*  
+1) To initialize terraform
 
 ```bash
-alias k="kubectl"
+terraform init -upgrade
 ```
 
-[&#8679;](#top)
+2) To visualize the changes that will happen by applying the files
 
-### **To deploy resources with yaml file with Terrafom**
-
-terraform init
+```bash
 terraform plan
+```
+
+3) To apply all the plan
+
+```bash
 tarreform apply
-
-[&#8679;](#top)
-
-### **To check resources**
-
-```bash
-kubectl get nodes
-kubectl get pods
-kubectl get services
-kubectl get deployments
-kubectl get events
-kubectl get secrets
-kubectl get logs
-helm list --all-namespaces
-k get ingressclass --all-namespaces
 ```
 
-*To keep verifying the resources add --watch at the end of the command :*
-
-*Example :*
+4) To delete all resources
 
 ```bash
-kubectl get services --watch
-```
-
-*To check the resources according to their namespace, add --namespace after the command and the namespace's name :*
-
-*Example :*
-
-```bash
-kubectl get services --namespace [namespace's-name]
-```
-
-[&#8679;](#top)
-
-### **To describe resources**
-
-```bash
-kubectl describe nodes
-kubectl describe pods
-kubectl describe services # or svc
-kubectl describe deployment # or deploy
-kubectl describe events
-kubectl describe secrets
-kubectl describe logs
-```
-
-*To specify which resource needs to be described just put the resource ID at the end of the command.*
-
-*Example :*
-
-```bash
-kubectl describe svc redis-service
-```
-
-*To access to all the logs from all containers :*
-
-```bash
-kubectl logs podname --all-containers
-```
-
-*To access to the logs from a specific container :*
-
-```bash
-kubectl logs podname -c [container's-name]
-```
-
-*To list all events from a specific pod :*
-
-```bash
-kubectl get events --field-selector [involvedObject].name=[podsname]
-```
-
-[&#8679;](#top)
-
-### **To delete resources**
-
-```bash
-kubectl delete deploy --all
-kubectl delete svc --all
-kubectl delete pvc --all
-kubectl delete pv --all
-kubectl delete ingress --all
-kubectl delete secrets --all
-kubectl delete certificates --all
-az group delete --name [resourceGroupName] --yes --no-wait
-
-kubectl delete deployments --all -n [namespaceName]
-kubectl delete pods --all -n [namespaceName]
-kubectl delete replicaset --all -n [namespaceName]
-kubectl delete statefulset --all -n [namespaceName]
-kubectl delete daemonset --all -n [namespaceName]
-kubectl delete svc --all -n [namespaceName]
-kubectl delete namespace [namespaceName]
-kubectl delete clusterrole prometheus-grafana-clusterrole
-kubectl delete clusterrole prometheus-kube-state-metrics
-kubectl delete clusterrole system:prometheus
-kubectl delete clusterrolebinding --all -n [namespaceName]
-k delete ingressclass [insert ingressclass] --all-namespaces
-```
-
-[&#8679;](#top)
-
-### **To check TLS certificate in request order**
-
-```bash
-kubectl get certificate
-kubectl get certificaterequest
-kubectl get order
-kubectl get challenge
-```
-
-[&#8679;](#top)
-
-### **To describe TLS certificate in request order**
-
-```bash
-kubectl describe certificate
-kubectl describe certificaterequest
-kubectl describe order
-kubectl describe challenge
-```
-
-[&#8679;](#top)
-
-### **Get the IP address to point the DNS to nginx in the two namespaces**
-
-```bash
-kubectl get svc --all-namespaces
+terraform destroy
 ```
 
 [&#8679;](#top)
