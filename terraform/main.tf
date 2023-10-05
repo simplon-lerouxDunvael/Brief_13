@@ -123,7 +123,7 @@ resource "azurerm_linux_virtual_machine" "VM" {
   command = "ansible-galaxy install -r requirements.yml"
   }
   provisioner "local-exec" {
-  command = "ansible-playbook playbook.yml -i inventory.yml"
+  command = "ansible-playbook playbook.yml -i azure_rm.yml"
   }
 }
 
