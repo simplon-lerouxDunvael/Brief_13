@@ -21,8 +21,8 @@ module "deployment" {
   location                            = "West Europe"
   vnet_name                           = "dunab13-vnet"
   address_space                       = ["10.6.0.0/16"]
-  subnet1_name                        = "db13-sbnt"
-  subnet1_prefix                      = ["10.6.1.0/24"]
+  /* subnet1_name                        = "dunab13-sbnt"
+  subnet1_prefix                      = ["10.6.1.0/24"] */
   gateway_name                        = "dunab13_gateway"
   pubIP_gateway_name                  = "dunab13_gateway_pubIP"
   pubIP_allocation                    = "Static"
@@ -50,7 +50,7 @@ module "deployment" {
   nsgRule_destination_port_range2     = "*"
   nsgRule_source_address_prefix2      = "*"
   nsgRule_destination_address_prefix2 = "*"
-  nic_publicIP_name                   = "dunab13_nic_pubIP"
+  /* nic_publicIP_name                   = "dunab13_nic_pubIP"
   nic_pubIP_allocation                = "Static"
   sku_nic_pubIP                       = "Standard"
   vm_name                             = "dunab13-VM"
@@ -59,5 +59,67 @@ module "deployment" {
   storage_account_type                = "Premium_LRS"
   nic_name                            = "dunab13_Nic"
   nicIP_conf                          = "internal"
-  nic_allocation                      = "Dynamic"
+  nic_allocation                      = "Dynamic" */
 }
+
+# Créer une adresse IP publique pour le NIC de la VM
+resource "azurerm_public_ip" "nic_public_ip" {
+  name                = var.nic_publicIP_name
+  resource_group_name = module.deployment.azurerm_resource_group.rg.name
+  location            = module.deployment.azurerm_resource_group.rg.location
+  allocation_method   = var.nic_pubIP_allocation # Use "Static" if a static IP is needed
+  sku                 = var.sku_nic_pubIP
+}
+
+# Créez une interface réseau pour la machine virtuelle
+resource "azurerm_network_interface" "Nic" {
+  name                = var.nic_name
+  location            = module.deployment.azurerm_resource_group.rg.location
+  resource_group_name = module.deployment.azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                          = var.nicIP_conf
+    subnet_id                     = module.deployment.azurerm_subnet.subnet1.id
+    private_ip_address_allocation = var.nic_allocation
+    public_ip_address_id          = azurerm_public_ip.nic_public_ip.id
+  }
+}
+
+# Associate security group with network interface
+resource "azurerm_network_interface_security_group_association" "nsgAssociation" {
+  network_interface_id      = azurerm_network_interface.Nic.id
+  network_security_group_id = module.deployment.azurerm_network_security_group.nsg.id
+}
+
+# Créez la machine virtuelle Azure
+resource "azurerm_linux_virtual_machine" "VM" {
+  name                = var.vm_name
+  /* depends_on = [local_file.inventory_rendered] */
+  location            = module.deployment.azurerm_resource_group.rg.location
+  resource_group_name = module.deployment.azurerm_resource_group.rg.name
+  network_interface_ids = [azurerm_network_interface.Nic.id]
+  size                = var.vm_size
+  admin_username      = var.admin_username
+  admin_ssh_key {
+    username   = var.admin_username
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+  os_disk {
+    name              = "osdisk"
+    caching           = "ReadWrite"
+    storage_account_type = var.storage_account_type
+  }
+  source_image_reference {
+    publisher = "RedHat"
+    offer     = "RHEL"
+    sku       = "8-LVM"
+    version   = "8.8.2023081717"
+  }
+  provisioner "local-exec" {
+  command = "ansible-galaxy install -r requirements.yml"
+  }
+  provisioner "local-exec" {
+  command = "ansible-playbook playbook.yml -i inventory.yml"
+  }
+}
+
