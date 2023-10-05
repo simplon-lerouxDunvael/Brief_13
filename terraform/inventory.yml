@@ -1,6 +1,6 @@
 # Dynamic inventory
 
-plugin: azure_rm
+plugin: azure.azcollection.azure_rm # azure_rm
 # Use the default authentication method
 auth_source: auto
 
