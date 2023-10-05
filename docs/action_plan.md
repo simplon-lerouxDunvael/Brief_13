@@ -129,11 +129,13 @@ Then I had an issue with the ssh keys that could not be found. I found the solut
 
 To bound the NSG and the NIC I followed this [guide](https://www.patrickkoch.dev/posts/post_25/) and created an association resource to bound the NSG and NIC.
 
+I also added the ansible provider (cf. doc [ansible provider](https://registry.terraform.io/providers/ansible/ansible/latest/docs)).
+
 [&#8679;](#top)
 
 <div id='Pipeline'/>  
 
-### **Inventory.ini and playbook.yml**
+### **Inventory.ini/yml and playbook.yml**
 
 #### Inventory
 
@@ -198,7 +200,33 @@ conditionnal_groups:
 
 *conditionnal_groups* : The conditionnal_groups section checks if the VM's computer_name includes the string 'db13-VM'. This should work if the VM's computer name is indeed 'db13-VM'.
 
-I checked this [azure doc](https://learn.microsoft.com/en-us/azure/developer/ansible/dynamic-inventory-configure?tabs=azure-cli) to create a dynamic inventory.
+I checked these docs to create a dynamic inventory :
+
+* [azure doc](https://learn.microsoft.com/en-us/azure/developer/ansible/dynamic-inventory-configure?tabs=azure-cli)
+* [ansible doc1](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_inventory.html)
+* [ansible doc2](https://galaxy.ansible.com/ui/repo/published/azure/azcollection/)
+
+Attention : to be able to use the dynamic inventory it is necessary to install the plugin `azure_rm`. I can do it manually with the command `ansible-galaxy collection install my_namespace.my_collection`or i can install the plugin as a `dependance` in the `requirements.yml` file.
+
+I checked this [requirements ansible doc](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#install-multiple-collections-with-a-requirements-file) to be able to do it.
+
+The plugins for ansible are hosted in ansible-galaxy. Each plugin has a provider and a collection name. For example, for `azure_rm plugin`, the provider (or namespace) is `azure` and the collection is `azcollection`. The type of the collection is `galaxy` as it is hosted in ansible-galaxy.
+
+Configuration of a collection in requirements :
+
+```Bash
+collections:
+  - name: namespace.collectionName
+    type: galaxy
+```
+
+So to create the requirements.yml file and install the plugin my requirements looks like :
+
+```Bash
+collections:
+  - name: azure.azcollection
+    type: galaxy
+```
 
 #### Playbook
 
@@ -207,27 +235,38 @@ The playbook.yml file will contain tasks and instructions for performing the aud
 ```Bash
 ---
 - name: Run roles and SCAP audit
-  hosts: db13-VM
+  hosts: dunab13-VM
   remote_user: DunaAdmin
-  become: true
-  roles:
-    - "sudo"
-    - ...
+  become: yes # true
+  # roles:
+  #   - "sudo"
+  #   - ...
   tasks:
     - name: Install SCAP
-      command: "sudo yum install scap-security-guide openscap-scanner"
-      ignore_errors: yes
+      yum:
+        name:
+          - openscap-scanner
+          - scap-security-guide
+        state: present
 
-    - name: Run SCAP audit
-      command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_anssi_bp28_minimal system"
-      register: audit_result
+    - name: Run SCAP audit with ANSSI profile
+      command:
+        cmd: >-
+            oscap xccdf eval
+            --profile xccdf_org.ssgproject.content_profile_anssi_bp28_minimal
+            --results /tmp/anssi_results.xml
+            --report /tmp/anssi_report.html
+            /usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml
+      register: oscap_result
       ignore_errors: yes
 
     - name: Save audit report
-      copy:
-        content: "{{ audit_result.stdout }}"
-        dest: ../audit_reports/audit_report.xml
-      when: audit_result.rc == 0
+      fetch:
+        src: /tmp/anssi_report.html
+        dest: ./audit_reports/audit_report.xml
+        flat: yes
+      tags:
+      - verification
 ```
 
 I modified the playbook so it uses the db13-VM as the target host to run the SCAP audit with the specified profile.
@@ -237,8 +276,58 @@ When I run my playbook, it targets the VM named "db13-VM" using the host name I 
 To run the playbook I need to use this command :
 
 ```Bash
-ansible-playbook playbook.yml -i inventory.ini
+ansible-playbook playbook.yml -i inventory.yml # or inventory.ini
 ```
+
+*To be able to deploy the playbook on the right host, I need to either provide the host's dns or public IP address.*
+
+What's great with using inventory.YML (so a dynamic inventory) is that I don't need to put manually or add a terraform template to add the host's public IP into the inventory. I just need to provide the plugin, key words (such as the name of the machine or part of it, or a specific group of VM, or the impacted OS).
+
+With a inventory.INI I have to either put it manually (after the VM's creation which is not very devops like) or create a template file (file.tpl) and two resources in my deployment.
+
+*Cf. this dos on terraform templates : [Template files](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file).*
+
+In the inventory.tpl file I create a reference (I name it as I want).
+
+inventory.tpl :
+
+```Bash
+[azure_vms]
+dunab13-VM ansible_ssh_host={nic_public_ip} # {nic_public_ip} is the reference
+```
+
+Then I use this reference in the resource `data "template_file"`. I provide the file.tpl path in my repository and create a variable (that has the same name as my reference) and tell it that its value is the nic public ip address of the public ip (for the nic) resource created previously and that I want to recover.
+
+```Bash
+data "template_file" "inventory" {
+  template = file("${path.module}/inventory.tpl")
+  vars = {nic_public_ip=azurerm_public_ip.nic_public_ip.ip_address} # {reference=azurerm_public_ip.nic_public_ip.ip_address}
+}
+```
+
+Then I create another resource that I call `xx_rendered` to create a file with this data that will be recovered (or renderded hence the name). I provide the resrouce data in the `content` part and add `rendered` at the end to specify it is recovered.
+
+Then I provide a path (that I choose depending of my repository) and provide a file name with the extension I want (here .ini) so that the the file will be created at the right place, with the right extension and with the rendered data written in it.
+
+```Bash
+resource "local_file" "inventory_rendered" {
+  content = data.template_file.inventory.rendered
+  filename = "${path.module}/inventory.ini"
+}
+```
+
+Finally I add a `depends on` in my VM's creation properties to make sure the file is created before the running of the playbook (that needs the inventory file).
+
+```Bash
+# Créez la machine virtuelle Azure
+resource "azurerm_linux_virtual_machine" "VM" {
+  name                = var.vm_name
+  depends_on = [local_file.inventory_rendered] # type and name of the resource
+```
+
+This way, I can recover automatically (in a much more complex way) the public IP address of my host and deploy my playbook.
+
+However it is much more simple to use the dynamic inventory to point the host to the ansible playbook.
 
 [&#8679;](#top)
 
