@@ -38,11 +38,12 @@
 **Jeudi 05/10/23**  
 *Résultats de la veille* :  
 
-* 
+* Playbook lancé : globalement fonctionnel mais à tester lors du déploiement global de l'infra
+* Template terraform fait afin de pouvoir récupérer l'adresse IP publique du nic de la VM et de le mettre dans l'inventory.ini
 
 *Objectifs* =  
 
-* 
+* Continuer le brief notamment le côté module avec Joffrey
 
 **Vendredi 06/10/23**  
 *Résultats de la veille* :  
