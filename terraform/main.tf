@@ -25,8 +25,6 @@ module "deployment" {
   location                            = "West Europe"
   vnet_name                           = "dunab13-vnet"
   address_space                       = ["10.6.0.0/16"]
-  /* subnet1_name                        = "dunab13-sbnt"
-  subnet1_prefix                      = ["10.6.1.0/24"] */
   gateway_name                        = "dunab13_gateway"
   pubIP_gateway_name                  = "dunab13_gateway_pubIP"
   pubIP_allocation                    = "Static"
@@ -54,7 +52,9 @@ module "deployment" {
   nsgRule_destination_port_range2     = "*"
   nsgRule_source_address_prefix2      = "*"
   nsgRule_destination_address_prefix2 = "*"
-  /* nic_publicIP_name                   = "dunab13_nic_pubIP"
+  /* subnet1_name                        = "dunab13-sbnt"
+  subnet1_prefix                      = ["10.6.1.0/24"]
+  nic_publicIP_name                   = "dunab13_nic_pubIP"
   nic_pubIP_allocation                = "Static"
   sku_nic_pubIP                       = "Standard"
   vm_name                             = "dunab13-VM"
