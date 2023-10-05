@@ -23,7 +23,7 @@
             --report /tmp/anssi_report.html
             /usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml
       register: oscap_result
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Save audit report
       fetch:
