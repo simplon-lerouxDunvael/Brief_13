@@ -1,4 +1,4 @@
-# Fichier faisant appel aux modules et qui déploie le cluster AKS
+# Fichier faisant appel aux modules et qui déploie la VM, le NIC et son IP public ainsi que le lien NSG/NIC
 
 terraform {
  required_providers {
