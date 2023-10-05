@@ -1,4 +1,4 @@
-# Variables pour le déploiement du module
+# Définition des variables pour le déploiement du main (VM, NIC, NIC pubIP)
 
 # Variables ressources
 
