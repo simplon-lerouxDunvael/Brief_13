@@ -395,7 +395,21 @@ ansible-playbook playbook.yml -i inventory.ini
 
 This runs the audit according to my schedule or when triggered manually, saves the audit report and allows me to monitor the results.
 
+I had an error when I tried to install azcollections. After checking this [guide](https://stackoverflow.com/questions/71256239/azure-rm-ansible-plugin-fails-to-parse-dynamic-inventory) I found that it was not installed and that I could not modify it as it was on azure direclty and not my user.
 
+So I had to use WSL, install ubuntu, terraform, ansible, the CLI and then use the following commands to install azcollections at the right place (ansible directory) :
+
+```Bash
+ansible-galaxy collection install azure.azcollection --force
+```
+
+*I had to use the `--force` as it would tell me it was installed if I did not use it and would not install it, such nonsense --'*.
+
+And then :
+
+```Bash
+pip install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements-azure.txt
+```
 
 [&#8679;](#top)
 
@@ -404,6 +418,12 @@ This runs the audit according to my schedule or when triggered manually, saves t
 ### **Roles**
 
 In order to create the ansible roles I used this [github repository](https://github.com/GSA/ansible-os-rhel8/tree/main) and this [ansible galaxy role](https://galaxy.ansible.com/ui/standalone/roles/RedHatOfficial/rhel8_anssi_bp28_minimal/).
+
+To generate a role and get the necessary files in my repo i need to do :
+
+```Bash
+ansible-galaxy init anssi
+```
 
 [&#8679;](#top)
 
