@@ -69,8 +69,8 @@ module "deployment" {
 # Créer une adresse IP publique pour le NIC de la VM
 resource "azurerm_public_ip" "nic_public_ip" {
   name                = var.nic_publicIP_name
-  resource_group_name = module.deployment.azurerm_resource_group.rg.name
-  location            = module.deployment.azurerm_resource_group.rg.location
+  resource_group_name = module.deployment.resource_group.name
+  location            = module.deployment.resource_group.location
   allocation_method   = var.nic_pubIP_allocation # Use "Static" if a static IP is needed
   sku                 = var.sku_nic_pubIP
 }
@@ -78,12 +78,12 @@ resource "azurerm_public_ip" "nic_public_ip" {
 # Créez une interface réseau pour la machine virtuelle
 resource "azurerm_network_interface" "Nic" {
   name                = var.nic_name
-  location            = module.deployment.azurerm_resource_group.rg.location
-  resource_group_name = module.deployment.azurerm_resource_group.rg.name
+  location            = module.deployment.resource_group.location
+  resource_group_name = module.deployment.resource_group.name
 
   ip_configuration {
     name                          = var.nicIP_conf
-    subnet_id                     = module.deployment.azurerm_subnet.subnet1.id
+    subnet_id                     = module.deployment.subnet.id
     private_ip_address_allocation = var.nic_allocation
     public_ip_address_id          = azurerm_public_ip.nic_public_ip.id
   }
@@ -92,15 +92,15 @@ resource "azurerm_network_interface" "Nic" {
 # Associate security group with network interface
 resource "azurerm_network_interface_security_group_association" "nsgAssociation" {
   network_interface_id      = azurerm_network_interface.Nic.id
-  network_security_group_id = module.deployment.azurerm_network_security_group.nsg.id
+  network_security_group_id = module.deployment.nsg.id
 }
 
 # Créez la machine virtuelle Azure
 resource "azurerm_linux_virtual_machine" "VM" {
   name                = var.vm_name
   /* depends_on = [local_file.inventory_rendered] */
-  location            = module.deployment.azurerm_resource_group.rg.location
-  resource_group_name = module.deployment.azurerm_resource_group.rg.name
+  location            = module.deployment.resource_group.location
+  resource_group_name = module.deployment.resource_group.name
   network_interface_ids = [azurerm_network_interface.Nic.id]
   size                = var.vm_size
   admin_username      = var.admin_username
