@@ -48,22 +48,26 @@
 **Vendredi 06/10/23**  
 *Résultats de la veille* :  
 
-* 
+* Côté module vu
+* Problème d'az connections sur azure qui ne peuvent pas être modifiés : création d'un vm ubuntu sur WSL, installation de tous les packages (cli, terraform, ansible, ...). 
+* Commande pip install lancée et réussie : azconnections installées
+* Reste à tout relancer et voir
 
 *Objectifs* =  
 
-* 
+* Trouver une solution au problème de connection à la base de donénes de GLPI
 
 [&#8679;](#top)  
 
 **Lundi 0/11/23**  
 *Résultats de la veille* :  
 
-* 
+* Problème de connection à la base de donénes de GLPI avancé : pas un problème réseau mais un problème de variables qui n'ont pas les bonnes valeurs
+* Encodage des mots de passe revu = mais le problème persiste
 
 *Objectifs* =  
 
-* 
+* Nouveau message d'erreur déjà vu dans des publications = à aller voir pour essayer de régler le problème
 
 **Mardi 0/11/23**  
 *Résultats de la veille* :  
