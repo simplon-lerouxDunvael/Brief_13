@@ -26,12 +26,6 @@ module "deployment" {
   location                            = "West Europe"
   vnet_name                           = "dunab13-vnet"
   address_space                       = ["10.6.0.0/16"]
-  gateway_name                        = "dunab13_gateway"
-  pubIP_gateway_name                  = "dunab13_gateway_pubIP"
-  pubIP_allocation                    = "Static"
-  pubIP_sku                           = "Standard"
-  priv_subnet_name                    = "dunab13_priv_sbnt"
-  priv_sbnt_add_pref                  = ["10.6.2.0/24"]
   pub_subnet_name                     = "dunab13_pub_sbnt"
   pub_sbnt_add_pref                   = ["10.6.3.0/24"]
   nsg_name                            = "dunab13_nsg"
@@ -53,7 +47,13 @@ module "deployment" {
   nsgRule_destination_port_range2     = "*"
   nsgRule_source_address_prefix2      = "*"
   nsgRule_destination_address_prefix2 = "*"
-  /* subnet1_name                        = "dunab13-sbnt"
+  /* gateway_name                        = "dunab13_gateway"
+  pubIP_gateway_name                  = "dunab13_gateway_pubIP"
+  pubIP_allocation                    = "Static"
+  pubIP_sku                           = "Standard"
+  priv_subnet_name                    = "dunab13_priv_sbnt"
+  priv_sbnt_add_pref                  = ["10.6.2.0/24"]
+  subnet1_name                        = "dunab13-sbnt"
   subnet1_prefix                      = ["10.6.1.0/24"]
   nic_publicIP_name                   = "dunab13_nic_pubIP"
   nic_pubIP_allocation                = "Static"
@@ -120,11 +120,11 @@ resource "azurerm_linux_virtual_machine" "VM" {
     sku       = "8-LVM"
     version   = "8.8.2023081717"
   }
-  provisioner "local-exec" {
+  /* provisioner "local-exec" {
   command = "ansible-galaxy install -r requirements.yml"
   }
   provisioner "local-exec" {
   command = "ansible-playbook playbook.yml -i azure_rm.yml"
-  }
+  } */
 }
 
