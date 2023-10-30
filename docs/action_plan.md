@@ -524,4 +524,12 @@ terraform destroy
 
 [&#8679;](#top)
 
+### To generate ssh keys pairs
+
+```Bash
+ssh-keygen -t rsa -b 2048
+```
+
+[&#8679;](#top)
+
 </div>
