@@ -4,7 +4,7 @@
   remote_user: DunaAdmin
   become: yes # true
   roles:
-    - anssi_bp28_minimal
+    - RedHatOfficial.rhel8_anssi_bp28_minimal
   tasks:
     - name: Install SCAP
       yum:
