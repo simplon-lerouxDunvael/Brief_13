@@ -3,5 +3,5 @@ collections:
     version: 1.18.1
     type: galaxy
 
-roles:
-  - name: RedHatOfficial.rhel8_anssi_bp28_minimal # name of the role to deploy
+# roles:
+#   - name: RedHatOfficial.rhel8_anssi_bp28_minimal # name of the role to deploy

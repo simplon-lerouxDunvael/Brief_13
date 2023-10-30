@@ -3,8 +3,8 @@
   hosts: dunab13-VM
   remote_user: DunaAdmin
   become: yes # true
-  roles:
-    - RedHatOfficial.rhel8_anssi_bp28_minimal
+  # roles:
+  #   - RedHatOfficial.rhel8_anssi_bp28_minimal
   tasks:
     - name: Install SCAP
       yum:
