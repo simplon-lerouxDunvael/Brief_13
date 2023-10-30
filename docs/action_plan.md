@@ -527,7 +527,7 @@ terraform destroy
 ### To generate ssh keys pairs
 
 ```Bash
-ssh-keygen -t rsa -b 2048
+ssh-keygen -t rsa -b 2048 -f ~/[NOM DE CLÉ] -N ""
 ```
 
 [&#8679;](#top)
