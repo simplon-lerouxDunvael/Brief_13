@@ -3,9 +3,8 @@
   hosts: dunab13-VM
   remote_user: DunaAdmin
   become: yes # true
-  # roles:
-  #   - "sudo"
-  #   - ...
+  roles:
+    - anssi_bp28_minimal
   tasks:
     - name: Install SCAP
       yum:
@@ -31,4 +30,4 @@
         dest: ./audit_reports/audit_report.xml
         flat: yes
       tags:
-      - verification
+        - verification
