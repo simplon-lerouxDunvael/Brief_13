@@ -3,9 +3,5 @@ collections:
     version: 1.18.1
     type: galaxy
 
-# roles:
-#   - src: git@github
-#     name: sudo # name of the role to deploy
-#     version: main
-#     scm: git
-
+roles:
+  - name: anssi_bp28_minimal # name of the role to deploy
