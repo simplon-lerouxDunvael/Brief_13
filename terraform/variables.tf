@@ -5,7 +5,7 @@
 variable subnet1_name {
   description = "Nom du sous-réseau 1"
   type = string
-  default = "dunab13-sbnt"
+  default = "dunb13-sbnt"
 }
 
 variable subnet1_prefix {  
@@ -19,7 +19,7 @@ variable subnet1_prefix {
 variable nic_publicIP_name {
   description = "Nom de l'IP publique du NIC de la VM"
   type = string
-  default = "dunab13_nic_pubIP"
+  default = "dunb13_nic_pubIP"
 }
 
 variable nic_pubIP_allocation {
@@ -37,7 +37,7 @@ variable sku_nic_pubIP {
 variable vm_name {
   description = "Nom du cluster AKS"
   type = string
-  default = "dunab13-VM"
+  default = "dunb13-VM"
 }
 
 variable vm_size {
@@ -49,7 +49,7 @@ variable vm_size {
 variable admin_username {
   description = "Nom de l'administrateur de la VM"
   type = string
-  default = "DunaAdmin"
+  default = "DunAdmin"
 }
 
 variable storage_account_type {
@@ -61,7 +61,7 @@ variable storage_account_type {
 variable nic_name {
   description = "Nom du NIC"
   type = string
-  default = "dunab13_Nic"
+  default = "dunb13_Nic"
 }
 
 variable nicIP_conf {

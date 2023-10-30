@@ -1,7 +1,7 @@
 ---
 - name: Run roles and SCAP audit
   hosts: dunab13-VM
-  remote_user: DunaAdmin
+  remote_user: DunAdmin
   become: yes # true
   # roles:
   #   - RedHatOfficial.rhel8_anssi_bp28_minimal
