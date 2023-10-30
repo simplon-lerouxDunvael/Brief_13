@@ -129,6 +129,14 @@ Then I had an issue with the ssh keys that could not be found. I found the solut
 
 To bound the NSG and the NIC I followed this [guide](https://www.patrickkoch.dev/posts/post_25/) and created an association resource to bound the NSG and NIC.
 
+```Bash
+# Associate security group with network interface
+resource "azurerm_network_interface_security_group_association" "nsgAssociation" {
+  network_interface_id      = azurerm_network_interface.Nic.id
+  network_security_group_id = module.deployment.nsg.id
+}
+```
+
 I also added the ansible provider (cf. doc [ansible provider](https://registry.terraform.io/providers/ansible/ansible/latest/docs)).
 
 I use a terraform module and also deploy resources directly in my main.tf. I reference resources from the module with `module.NameOfModule.OutputName.valueIwant`.
@@ -191,7 +199,7 @@ db13-VM ansible_ssh_host=db13-VM
 
 This configuration specifies that "db13-VM" is the host name, and that i want Ansible to use it as the identifier for my Azure VM.
 
-It is also possible to use an inventory.yml file. It makes possible to create a dynamic inventory :
+It is also possible to use an inventory.yml file (the file name must finish by azure_rm.yml to work). It makes possible to create a dynamic inventory :
 
 ```Bash
 # Dynamic inventory
@@ -221,7 +229,7 @@ I checked these docs to create a dynamic inventory :
 * [ansible doc1](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_inventory.html)
 * [ansible doc2](https://galaxy.ansible.com/ui/repo/published/azure/azcollection/)
 
-Attention : to be able to use the dynamic inventory it is necessary to install the plugin `azure_rm`. I can do it manually with the command `ansible-galaxy collection install my_namespace.my_collection`or i can install the plugin as a `dependance` in the `requirements.yml` file.
+Attention : to be able to use the dynamic inventory it is necessary to install the plugin `azure_rm`. I can do it manually with the command `ansible-galaxy collection install my_namespace.my_collection` or i can install the plugin as a `dependance` in the `requirements.yml` file.
 
 I checked this [requirements ansible doc](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#install-multiple-collections-with-a-requirements-file) to be able to do it.
 
@@ -291,7 +299,7 @@ When I run my playbook, it targets the VM named "db13-VM" using the host name I 
 To run the playbook I need to use this command :
 
 ```Bash
-ansible-playbook playbook.yml -i inventory.yml # or inventory.ini
+ansible-playbook playbook.yml -i azure_rm.yml # or inventory.ini
 ```
 
 *To be able to deploy the playbook on the right host, I need to either provide the host's dns or public IP address.*
@@ -342,7 +350,7 @@ resource "azurerm_linux_virtual_machine" "VM" {
 
 This way, I can recover automatically (in a much more complex way) the public IP address of my host and deploy my playbook.
 
-However it is much more simple to use the dynamic inventory to point the host to the ansible playbook.
+However it is much more simple to use the dynamic inventory to point the host to the ansible playbook which is why I use the dynamic playbook.
 
 [&#8679;](#top)
 
@@ -390,7 +398,7 @@ After installing SCAP on my VM, I created a playbook.yml file. In this playbook,
 Once I've created this playbook, I run it from the command line with the following Ansible command:
 
 ```bash
-ansible-playbook playbook.yml -i inventory.ini
+ansible-playbook playbook.yml -i azure_rm.yml
 ```
 
 This runs the audit according to my schedule or when triggered manually, saves the audit report and allows me to monitor the results.
@@ -500,6 +508,12 @@ terraform plan
 
 ```bash
 tarreform apply
+```
+
+To avoid the `yes` approval demand :
+
+```bash
+tarreform apply -auto-approve
 ```
 
 4) To delete all resources
