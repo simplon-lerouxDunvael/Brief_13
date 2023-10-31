@@ -1,0 +1,6 @@
+- name: Install SCAP
+  yum:
+    name:
+      - openscap-scanner
+      - scap-security-guide
+    state: present
