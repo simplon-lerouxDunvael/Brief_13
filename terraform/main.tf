@@ -124,7 +124,6 @@ resource "azurerm_linux_virtual_machine" "VM" {
   command = "ansible-galaxy install -r requirements.yml"
   }
   provisioner "local-exec" {
-  command = "ansible-playbook playbook.yml -i azure_rm.yml"
+  command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml -i azure_rm.yml"
   }
 }
-
