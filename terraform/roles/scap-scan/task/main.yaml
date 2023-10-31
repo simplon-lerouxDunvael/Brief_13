@@ -12,7 +12,7 @@
 - name: Save audit report
   fetch:
     src: /tmp/anssi_report.html
-    dest: ../../../../audit_reports/audit_report.xml
+    dest: ../../../audit_reports/audit_report.xml
     flat: yes
   tags:
     - verification

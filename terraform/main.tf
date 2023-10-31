@@ -107,7 +107,7 @@ resource "azurerm_linux_virtual_machine" "VM" {
   admin_username      = var.admin_username
   admin_ssh_key {
     username   = var.admin_username
-    public_key = file("~/Brief_13/.ssh/id_rsa.pub")
+    public_key = file("~/.ssh/id_rsa.pub") # file("~/Brief_13/.ssh/id_rsa.pub") for azure, file("~/.ssh/id_rsa.pub") for WSL
   }
   os_disk {
     name              = "osdisk"
@@ -121,10 +121,10 @@ resource "azurerm_linux_virtual_machine" "VM" {
     version   = "8.8.2023081717"
   }
   provisioner "local-exec" {
-  command = "ansible-galaxy install -r ../ansible/requirements.yml"
+  command = "ansible-galaxy install -r requirements.yml"
   }
   provisioner "local-exec" {
-  command = "ansible-playbook ../ansible/playbook.yml -i ../ansible/azure_rm.yml"
+  command = "ansible-playbook playbook.yml -i azure_rm.yml"
   }
 }
 

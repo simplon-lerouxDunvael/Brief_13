@@ -13,4 +13,4 @@ conditionnal_groups:
   generatedVm: "'dunb13-VM' in computer_name"
 
 hostnames:
-  - dunb13-VMs
+  - dunb13-VM
