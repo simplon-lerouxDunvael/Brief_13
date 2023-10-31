@@ -2,7 +2,7 @@
 - name: Run roles and SCAP audit
   hosts: dunb13-VM
   remote_user: DunAdmin
-  become: yes
+  become: true
   roles:
     - redHat_official_minAnssi
     - scap-install
