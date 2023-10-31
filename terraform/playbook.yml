@@ -1,6 +1,6 @@
 ---
 - name: Run roles and SCAP audit
-  hosts: dunb13-VM
+  hosts: all
   remote_user: DunAdmin
   become: true
   roles:

@@ -11,6 +11,3 @@ include_vm_resource_groups:
 conditionnal_groups:
 # Conditionally group VMs based on computer name
   generatedVm: "'dunb13-VM' in computer_name"
-
-hostnames:
-  - dunb13-VM
