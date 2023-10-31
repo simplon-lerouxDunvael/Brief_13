@@ -4,9 +4,9 @@
   remote_user: DunAdmin
   become: true
   roles:
-    - role: ./role/redHat_official_minAnssi
-    - role: ./role/scap-install
-    - role: ./role/scap-scan
+    - role: ./roles/redHat_official_minAnssi
+    - role: ./roles/scap-install
+    - role: ./roles/scap-scan
 
 # ---
 # - name: Run roles and SCAP audit
