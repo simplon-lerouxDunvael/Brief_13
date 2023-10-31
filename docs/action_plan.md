@@ -433,6 +433,10 @@ To generate a role and get the necessary files in my repo i need to do :
 ansible-galaxy init anssi
 ```
 
+I also found this [RedHat guide](https://www.redhat.com/en/blog/implementing-anssi-security-recommendations-rhel-7-and-8).
+
+
+
 [&#8679;](#top)
 
 <div id='Owasp'/>  
