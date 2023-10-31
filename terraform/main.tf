@@ -107,7 +107,7 @@ resource "azurerm_linux_virtual_machine" "VM" {
   admin_username      = var.admin_username
   admin_ssh_key {
     username   = var.admin_username
-    public_key = file("~/.ssh/id_rsa.pub") # file("~/Brief_13/.ssh/id_rsa.pub") for azure, file("~/.ssh/id_rsa.pub") for WSL
+    public_key = file("~/Brief_13/.ssh/id_rsa.pub") # file("~/Brief_13/.ssh/id_rsa.pub") for azure, file("~/.ssh/id_rsa.pub") for WSL
   }
   os_disk {
     name              = "osdisk"
