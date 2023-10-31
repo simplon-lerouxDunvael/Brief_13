@@ -121,10 +121,10 @@ resource "azurerm_linux_virtual_machine" "VM" {
     version   = "8.8.2023081717"
   }
   /* provisioner "local-exec" {
-  command = "ansible-galaxy install -r requirements.yml"
+  command = "ansible-galaxy install -r ./ansible/requirements.yml"
   }
   provisioner "local-exec" {
-  command = "ansible-playbook playbook.yml -i azure_rm.yml"
+  command = "ansible-playbook ./ansible/playbook.yml -i ./ansible/azure_rm.yml"
   } */
 }
 
