@@ -1,2 +1,71 @@
 ---
-# tasks file for role
+- name: XCCDF Value var_authselect_profile # promote to variable
+  set_fact:
+    var_authselect_profile: !!str minimal
+  tags:
+    - always
+
+- name: Enable authselect - Select authselect profile
+  ansible.builtin.command:
+    cmd: authselect select "{{ var_authselect_profile }}"
+  register: result_authselect_select
+  failed_when: false
+  tags:
+  - CCE-88248-0
+  - NIST-800-53-AC-3
+  - configure_strategy
+  - enable_authselect
+  - low_complexity
+  - medium_disruption
+  - medium_severity
+  - no_reboot_needed
+
+- name: Enable authselect - Verify if PAM has been altered
+  ansible.builtin.command:
+    cmd: rpm -qV pam
+  register: result_altered_authselect
+  failed_when: false
+  when: result_authselect_select.rc != 0
+  tags:
+  - CCE-88248-0
+  - NIST-800-53-AC-3
+  - configure_strategy
+  - enable_authselect
+  - low_complexity
+  - medium_disruption
+  - medium_severity
+  - no_reboot_needed
+
+- name: Enable authselect - Informative message based on the authselect integrity
+    check
+  ansible.builtin.assert:
+    that:
+    - result_altered_authselect is skipped or result_altered_authselect.rc == 0
+    fail_msg:
+    - Files in the 'pam' package have been altered, so the authselect configuration
+      won't be forced.
+  tags:
+  - CCE-88248-0
+  - NIST-800-53-AC-3
+  - configure_strategy
+  - enable_authselect
+  - low_complexity
+  - medium_disruption
+  - medium_severity
+  - no_reboot_needed
+
+- name: Enable authselect - Force authselect profile select
+  ansible.builtin.command:
+    cmd: authselect select --force "{{ var_authselect_profile }}"
+  when:
+  - result_authselect_select.rc != 0
+  - result_altered_authselect is skipped or result_altered_authselect.rc == 0
+  tags:
+  - CCE-88248-0
+  - NIST-800-53-AC-3
+  - configure_strategy
+  - enable_authselect
+  - low_complexity
+  - medium_disruption
+  - medium_severity
+  - no_reboot_needed
