@@ -12,4 +12,11 @@
     - role : ./roles/authselect
     - role : ./roles/pwd-spec
     - role : ./roles/pwd-reuse
+    - role : ./roles/hash-pwd-auth
+    - role : ./roles/hash-sys-auth
+    - role : ./roles/interval-failedpwd
+    - role : ./roles/lockout
+    - role : ./roles/lockout-time
+    - role : ./roles/priv-escalation-auth
+    - role : ./roles/root-failedpwd
     - role : ./roles/scap-scan
