@@ -2,7 +2,7 @@
 
 plugin: azure_rm
 # Use the default authentication method
-auth_source: cli # auto
+auth_source: auto # auto cli
 
 include_vm_resource_groups:
 # Include the resource group containing the VM
