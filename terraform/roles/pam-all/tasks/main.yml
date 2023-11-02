@@ -1,2 +1,246 @@
 ---
-# tasks file for role
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+  tags:
+  - CCE-80653-9
+  - DISA-STIG-RHEL-08-020130
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - PCI-DSS-Req-8.2.3
+  - PCI-DSSv4-8.3.6
+  - PCI-DSSv4-8.3.9
+  - accounts_password_pam_dcredit
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+- name: XCCDF Value var_password_pam_dcredit # promote to variable
+  set_fact:
+    var_password_pam_dcredit: !!str -1
+  tags:
+    - always
+
+- name: Ensure PAM Enforces Password Requirements - Minimum Digit Characters - Ensure
+    PAM variable dcredit is set accordingly
+  ansible.builtin.lineinfile:
+    create: true
+    dest: /etc/security/pwquality.conf
+    regexp: ^#?\s*dcredit
+    line: dcredit = {{ var_password_pam_dcredit }}
+  when: '"pam" in ansible_facts.packages'
+  tags:
+  - CCE-80653-9
+  - DISA-STIG-RHEL-08-020130
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - PCI-DSS-Req-8.2.3
+  - PCI-DSSv4-8.3.6
+  - PCI-DSSv4-8.3.9
+  - accounts_password_pam_dcredit
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+  tags:
+  - CCE-80655-4
+  - DISA-STIG-RHEL-08-020120
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - PCI-DSS-Req-8.2.3
+  - PCI-DSSv4-8.3.6
+  - PCI-DSSv4-8.3.9
+  - accounts_password_pam_lcredit
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+- name: XCCDF Value var_password_pam_lcredit # promote to variable
+  set_fact:
+    var_password_pam_lcredit: !!str -1
+  tags:
+    - always
+
+- name: Ensure PAM Enforces Password Requirements - Minimum Lowercase Characters -
+    Ensure PAM variable lcredit is set accordingly
+  ansible.builtin.lineinfile:
+    create: true
+    dest: /etc/security/pwquality.conf
+    regexp: ^#?\s*lcredit
+    line: lcredit = {{ var_password_pam_lcredit }}
+  when: '"pam" in ansible_facts.packages'
+  tags:
+  - CCE-80655-4
+  - DISA-STIG-RHEL-08-020120
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - PCI-DSS-Req-8.2.3
+  - PCI-DSSv4-8.3.6
+  - PCI-DSSv4-8.3.9
+  - accounts_password_pam_lcredit
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+  tags:
+  - CCE-80656-2
+  - CJIS-5.6.2.1.1
+  - DISA-STIG-RHEL-08-020230
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - PCI-DSS-Req-8.2.3
+  - PCI-DSSv4-8.3.6
+  - PCI-DSSv4-8.3.9
+  - accounts_password_pam_minlen
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+- name: XCCDF Value var_password_pam_minlen # promote to variable
+  set_fact:
+    var_password_pam_minlen: !!str 18
+  tags:
+    - always
+
+- name: Ensure PAM Enforces Password Requirements - Minimum Length - Ensure PAM variable
+    minlen is set accordingly
+  ansible.builtin.lineinfile:
+    create: true
+    dest: /etc/security/pwquality.conf
+    regexp: ^#?\s*minlen
+    line: minlen = {{ var_password_pam_minlen }}
+  when: '"pam" in ansible_facts.packages'
+  tags:
+  - CCE-80656-2
+  - CJIS-5.6.2.1.1
+  - DISA-STIG-RHEL-08-020230
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - PCI-DSS-Req-8.2.3
+  - PCI-DSSv4-8.3.6
+  - PCI-DSSv4-8.3.9
+  - accounts_password_pam_minlen
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+  tags:
+  - CCE-80663-8
+  - DISA-STIG-RHEL-08-020280
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - accounts_password_pam_ocredit
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+- name: XCCDF Value var_password_pam_ocredit # promote to variable
+  set_fact:
+    var_password_pam_ocredit: !!str -1
+  tags:
+    - always
+
+- name: Ensure PAM Enforces Password Requirements - Minimum Special Characters - Ensure
+    PAM variable ocredit is set accordingly
+  ansible.builtin.lineinfile:
+    create: true
+    dest: /etc/security/pwquality.conf
+    regexp: ^#?\s*ocredit
+    line: ocredit = {{ var_password_pam_ocredit }}
+  when: '"pam" in ansible_facts.packages'
+  tags:
+  - CCE-80663-8
+  - DISA-STIG-RHEL-08-020280
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - accounts_password_pam_ocredit
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+  tags:
+  - CCE-80665-3
+  - DISA-STIG-RHEL-08-020110
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - PCI-DSS-Req-8.2.3
+  - PCI-DSSv4-8.3.6
+  - PCI-DSSv4-8.3.9
+  - accounts_password_pam_ucredit
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+- name: XCCDF Value var_password_pam_ucredit # promote to variable
+  set_fact:
+    var_password_pam_ucredit: !!str -1
+  tags:
+    - always
+
+- name: Ensure PAM Enforces Password Requirements - Minimum Uppercase Characters -
+    Ensure PAM variable ucredit is set accordingly
+  ansible.builtin.lineinfile:
+    create: true
+    dest: /etc/security/pwquality.conf
+    regexp: ^#?\s*ucredit
+    line: ucredit = {{ var_password_pam_ucredit }}
+  when: '"pam" in ansible_facts.packages'
+  tags:
+  - CCE-80665-3
+  - DISA-STIG-RHEL-08-020110
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-5(1)(a)
+  - NIST-800-53-IA-5(4)
+  - NIST-800-53-IA-5(c)
+  - PCI-DSS-Req-8.2.3
+  - PCI-DSSv4-8.3.6
+  - PCI-DSSv4-8.3.9
+  - accounts_password_pam_ucredit
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
