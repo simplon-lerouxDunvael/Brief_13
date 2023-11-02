@@ -11,7 +11,7 @@
 
 - name: Save audit report
   fetch:
-    src: /home/DunAdmin/anssi_report.html
+    src: /tmp/anssi_report.html
     dest: /home/dunvael/Brief_13/terraform/audit_reports/anssi_report.html # azure
     # dest: \home\dunvael\briefs\Brief_13\terraform\audits-reports # WSL
     flat: yes
