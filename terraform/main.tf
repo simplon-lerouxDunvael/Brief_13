@@ -24,7 +24,7 @@ provider "azurerm" {
 module "deployment" {
   source = "git::https://github.com/simplon-lerouxDunvael/Brief_13_bis"
   
-  resource_group_name                 = "dunb13-rg"
+  resource_group_name                 = "dunb13"
   location                            = "francecentral"
   vnet_name                           = "dunb13-vnet"
   address_space                       = ["10.6.0.0/16"]

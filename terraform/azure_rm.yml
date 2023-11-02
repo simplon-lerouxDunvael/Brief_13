@@ -6,8 +6,8 @@ auth_source: auto # auto cli
 
 include_vm_resource_groups:
 # Include the resource group containing the VM
-  - dunb13-rg
+  - dunb13
 
 conditionnal_groups:
 # Conditionally group VMs based on computer name
-  generatedVm: "'dunb13-VM' in computer_name"
+  generatedVm: "'dunb13-vm' in computer_name"

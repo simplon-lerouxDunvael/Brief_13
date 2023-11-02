@@ -3,7 +3,7 @@
   nic_publicIP_name                   = "dunb13_nic_pubIP"
   nic_pubIP_allocation                = "Static"
   sku_nic_pubIP                       = "Standard"
-  vm_name                             = "dunb13-VM"
+  vm_name                             = "dunb13-vm"
   vm_size                             = "Standard_DS1_v2"
   admin_username                      = "DunAdmin"
   storage_account_type                = "Premium_LRS"
