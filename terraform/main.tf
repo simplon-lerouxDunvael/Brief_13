@@ -16,6 +16,8 @@ terraform {
 provider "azurerm" {
   skip_provider_registration = true
   features {}
+  tenant_id = "a2e466aa-4f86-4545-b5b8-97da7c8febf3"
+  subscription_id = "a1f74e2d-ec58-4f9a-a112-088e3469febb"
 }
 
 # Utilisation du module
