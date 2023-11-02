@@ -7,11 +7,11 @@
     # - role: ./roles/redHat_official_minAnssi
     - role : ./roles/scap-install
     - role : ./roles/dnf-auto
-    - role : ./roles/gpg_check
+    - role : ./roles/gpg-check
     - role : ./roles/pam-all
     - role : ./roles/authselect
-    - role : ./roles/pwd_spec
-    - role : ./roles/pwd_reuse
+    - role : ./roles/pwd-spec
+    - role : ./roles/pwd-reuse
     - role : ./roles/scap-scan
 
 # ---
