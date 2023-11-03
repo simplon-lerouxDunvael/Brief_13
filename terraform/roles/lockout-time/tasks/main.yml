@@ -337,8 +337,7 @@
       - name: Set Lockout Time for Failed Password Attempts - Create an authselect
           custom profile based on the current profile
         ansible.builtin.command:
-          cmd: authselect create-profile hardening -b {{ authselect_current_profile
-            }}
+          cmd: authselect create-profile hardening -b {{ authselect_current_profile }}
         when:
         - result_authselect_check_cmd is success
         - authselect_current_profile is not match("custom/")
@@ -388,8 +387,7 @@
       - name: Set Lockout Time for Failed Password Attempts - Change the PAM file
           to be edited according to the custom authselect profile
         ansible.builtin.set_fact:
-          pam_file_path: /etc/authselect/{{ authselect_custom_profile }}/{{ pam_file_path
-            | basename }}
+          pam_file_path: /etc/authselect/{{ authselect_custom_profile }}/{{ pam_file_path | basename }}
       when:
       - result_authselect_present.stat.exists
 
@@ -509,8 +507,7 @@
       - name: Set Lockout Time for Failed Password Attempts - Create an authselect
           custom profile based on the current profile
         ansible.builtin.command:
-          cmd: authselect create-profile hardening -b {{ authselect_current_profile
-            }}
+          cmd: authselect create-profile hardening -b {{ authselect_current_profile }}
         when:
         - result_authselect_check_cmd is success
         - authselect_current_profile is not match("custom/")
@@ -560,8 +557,7 @@
       - name: Set Lockout Time for Failed Password Attempts - Change the PAM file
           to be edited according to the custom authselect profile
         ansible.builtin.set_fact:
-          pam_file_path: /etc/authselect/{{ authselect_custom_profile }}/{{ pam_file_path
-            | basename }}
+          pam_file_path: /etc/authselect/{{ authselect_custom_profile }}/{{ pam_file_path | basename }}
       when:
       - result_authselect_present.stat.exists
 
@@ -621,8 +617,7 @@
       path: '{{ item }}'
       backrefs: true
       regexp: (^\s*auth\s+)([\w\[].*\b)(\s+pam_faillock.so preauth.*)
-      line: \1required\3 unlock_time={{ var_accounts_passwords_pam_faillock_unlock_time
-        }}
+      line: \1required\3 unlock_time={{ var_accounts_passwords_pam_faillock_unlock_time }}
       state: present
     loop:
     - /etc/pam.d/system-auth
@@ -636,8 +631,7 @@
       path: '{{ item }}'
       backrefs: true
       regexp: (^\s*auth\s+)([\w\[].*\b)(\s+pam_faillock.so authfail.*)
-      line: \1required\3 unlock_time={{ var_accounts_passwords_pam_faillock_unlock_time
-        }}
+      line: \1required\3 unlock_time={{ var_accounts_passwords_pam_faillock_unlock_time }}
       state: present
     loop:
     - /etc/pam.d/system-auth
