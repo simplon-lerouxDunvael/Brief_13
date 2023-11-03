@@ -14,9 +14,9 @@
     - role : ./roles/pwd-reuse
     - role : ./roles/hash-pwd-auth
     - role : ./roles/hash-sys-auth
-    - role : ./roles/interval-failedpwd
     - role : ./roles/lockout
     - role : ./roles/lockout-time
-    - role : ./roles/priv-escalation-auth
+    - role : ./roles/interval-failedpwd
     - role : ./roles/root-failedpwd
+    # - role : ./roles/priv-escalation-auth
     - role : ./roles/scap-scan
