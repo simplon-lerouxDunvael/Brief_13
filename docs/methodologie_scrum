@@ -59,7 +59,7 @@
 
 [&#8679;](#top)  
 
-**Lundi 0/11/23**  
+**Lundi 30/10/23**  
 *Résultats de la veille* :  
 
 * Problème de connection à la base de donénes de GLPI avancé : pas un problème réseau mais un problème de variables qui n'ont pas les bonnes valeurs
@@ -69,7 +69,7 @@
 
 * Nouveau message d'erreur déjà vu dans des publications = à aller voir pour essayer de régler le problème
 
-**Mardi 0/11/23**  
+**Mardi 31/10/23**  
 *Résultats de la veille* :  
 
 * Utilisation de WSL : problèmes de connection
@@ -79,7 +79,7 @@
 
 * Créer les premiers rôles ansible et les tester
 
-**Mercredi 0/11/23**  
+**Mercredi 01/11/23**  
 *Résultats de la veille* :  
 
 * CONGE PAYE
@@ -88,7 +88,7 @@
 
 * CONGE PAYE
 
-**Jeudi 0/11/23**  
+**Jeudi 02/11/23**  
 *Résultats de la veille* :  
 
 * Premiers rôles ansible créés
@@ -98,7 +98,7 @@
 
 * Continuer à créer et tester les rôles
 
-**Vendredi 0/11/23**  
+**Vendredi 03/11/23**  
 *Résultats de la veille* :  
 
 * Rôles ansible presque tous fait
